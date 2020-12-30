@@ -3,7 +3,6 @@ const morgan = require('morgan');
 app = express();
 
 // settings
-
 app.set('port', process.env.PORT || 3000);
 app.set('json spaces', 2);
 
@@ -13,9 +12,8 @@ app.use(express.urlencoded({extended: false}));
 app.use(express.json());
 
 // routes
-app.get('/', (req, res) => {
-  res.json({"Title": "Hello World!"});
-})
+app.use(require('./routes/index'));
+app.use('/api/movies', require('./routes/movies'));
 
 // starting server
 app.listen(app.get('port'), () => {
