@@ -1,12 +1,14 @@
 const { Router } = require('express');
 const router = Router();
 const movies = require('../sample.json');
+const _ = require('underscore'); // biblioteca de funcionalidades adicionales para trabajar con datos de forma más simple
 
-// routes
+// get
 router.get('/', (req, res) => {
   res.json(movies);
 })
 
+// post
 router.post('/', (req, res) => {
   const { title, director, year, rating } = req.body;
   if (title && director && year && rating) {
@@ -19,9 +21,15 @@ router.post('/', (req, res) => {
   }
 })
 
+// delete
 router.delete('/:id', (req, res) => {
-  const { } = req.params;
-
+  const { id } = req.params;
+  _.each(movies, (movie, i) => {
+    if (movie.id == id) {
+      movies.splice(i, 1);
+    }
+  });
+  res.json(movies)
 })
 
 module.exports = router;
